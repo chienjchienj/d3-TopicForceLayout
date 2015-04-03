@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <style>
 body, .stage {
-  background: #042029; 
+  background:#000000; 
 }
 
 
@@ -11,42 +11,37 @@ body, .stage {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-var w = 1400,
-    h = 1500;
+var w = 1500,
+    h = 900;
 
 var color = d3.scale.category20();
 
+d3.json("./output_npa.json", function(error, graph) {
+  var circleWidth = 7;
 
+  var fontFamily = 'Bree Serif',
+      fontSizeHighlight = '0.1em',
+      fontSizeNormal = '0.1em';
 
-
-
-d3.json("./output_KP.json", function(error, graph) {
-var circleWidth = 5;
-
-var fontFamily = 'Bree Serif',
-    fontSizeHighlight = '0.1em',
-    fontSizeNormal = '0.1em';
-
-var palette = {
-      "lightgray": "#819090",
-      "gray": "#708284",
-      "mediumgray": "#536870",
-      "darkgray": "#475B62",
-
-      "darkblue": "#0A2933",
-      "darkerblue": "#042029",
-
-      "paleryellow": "#FCF4DC",
-      "paleyellow": "#EAE3CB",
-      "yellow": "#A57706",
-      "orange": "#BD3613",
-      "red": "#D11C24",
-      "pink": "#C61C6F",
-      "purple": "#595AB7",
-      "blue": "#2176C7",
-      "green": "#259286",
-      "yellowgreen": "#738A05"
-  }
+  var palette = {
+        "lightgray": "#819090",
+        "gray": "#708284",
+        "mediumgray": "#536870",
+        "darkgray": "#475B62",
+        "black":"#000000",
+        "darkblue": "#0A2933",
+        "darkerblue": "#042029",
+        "paleryellow": "#FCF4DC",
+        "paleyellow": "#EAE3CB",
+        "yellow": "#A57706",
+        "orange": "#BD3613",
+        "red": "#D11C24",
+        "pink": "#C61C6F",
+        "purple": "#595AB7",
+        "blue": "#2176C7",
+        "green": "#259286",
+        "yellowgreen": "#738A05"
+    };
 
 
   var nodes=graph.nodes;
@@ -60,17 +55,15 @@ var vis = d3.select("body")
 var force = d3.layout.force()
     .nodes(nodes)
     .links(links)
-    .charge(10)
-    .gravity(0)
-    .linkDistance(40)
+    .charge(-250)    
+    .linkDistance(100)
     .size([w, h]);
 
  var link = vis.selectAll(".link")
         .data(links)
         .enter().append("line")
-          
-          .attr("stroke", "#CCC")
-          .attr("fill", palette.red);
+        .attr("stroke", "#CCC")
+        .attr("fill", palette.red);
 
  var node = vis.selectAll("circle.node")
       .data(nodes)
@@ -92,8 +85,8 @@ var force = d3.layout.force()
     .attr("x",    function(d, i) { return circleWidth + 5; })
       .attr("y",            function(d, i) { if (i>0) { return circleWidth + 0 }    else { return 8 } })
       .attr("font-family",  "Bree Serif")
-      .attr("fill",         function(d, i) {  return  palette.paleryellow;  })
-      .attr("font-size",    function(d, i) {  return  "0.1em"; })
+      .attr("fill",         function(d, i) {  return  palette.lightgray;  })
+      .attr("font-size",    function(d, i) {  return  "0.5em"; })
       .attr("text-anchor",  function(d, i) { if (i>0) { return  "beginning"; }      else { return "end" } })
 
 
