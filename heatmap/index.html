@@ -82,16 +82,10 @@
         <p><span id="value"></p>
 </div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-Order: 
-  <select id="order">
-  <option value="hclust">by cluster</option>
-  <option value="probecontrast">by probe name and contrast name</option>
-  <option value="probe">by probe name</option>
-  <option value="contrast">by contrast name</option>
-  <option value="custom">by log2 ratio</option>
-  </select>
-  </select>
+
 <div id="chart" style='overflow:auto;'></div>
+
+
 
 <script type="text/javascript">
 var margin = { top: 150, right: 10, bottom: 0, left: 100 },
@@ -103,7 +97,7 @@ var margin = { top: 150, right: 10, bottom: 0, left: 100 },
   width, // - margin.left - margin.right,
   height, // - margin.top - margin.bottom,
   //gridSize = Math.floor(width / 24),
-  legendElementWidth = cellSize_y*2.5,
+  legendElementWidth = cellSize_x*2.5,
   colorBuckets = 21,
   colors = ['#000000','#1A693B','#347B53','#4F8D6B','#699F83','#83B09B','#9EC2B3','#B8D4CB','#D2E6E3','#EDF8FB','#FFFFFF','#F1EEF6','#E6D3E1','#DBB9CD','#D19EB9','#C684A4','#BB6990','#B14F7C','#A63467','#9B1A53','#91003F'];
   //colors = ['#000000','#1A693B','#347B53','#4F8D6B','#699F83','#83B09B','#9EC2B3','#B8D4CB','#D2E6E3','#EDF8FB','#FFFFFF','#F1EEF6','#E6D3E1','#DBB9CD','#D19EB9','#C684A4','#BB6990','#B14F7C','#A63467','#9B1A53','#91003F'];
@@ -234,11 +228,18 @@ width = cellSize_x*col_number; // - margin.left - margin.right,
       .attr("class", "legend");
  
   legend.append("rect")
-    .attr("x", function(d, i) { return legendElementWidth * i; })
-    .attr("y", height+(cellSize*2))
+    .attr("x", function(d, i) { 
+      console.log('x='+legendElementWidth * i);
+      return legendElementWidth * i; })
+    .attr("y", function(d,i) {
+      console.log('y='+(height+cellSize*2));
+      return height+cellSize*2;
+    })
     .attr("width", legendElementWidth)
     .attr("height", cellSize)
-    .style("fill", function(d, i) { return colorScale(d); });
+    .style("fill", function(d, i) { 
+        return '#000000'; 
+        });//colorScale(d);
  
   legend.append("text")
     .attr("class", "mono")
